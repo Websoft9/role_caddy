@@ -1,0 +1,13 @@
+- name: Import caddy repo and Install caddy
+  shell: |
+    dnf install 'dnf-command(copr)'
+    dnf copr enable @caddy/caddy
+    dnf install caddy
+  when: ansible_distribution_major_version == "8"
+
+- name: Import caddy repo and Install caddy
+  shell: |
+    yum install yum-plugin-copr
+    yum copr enable @caddy/caddy
+    yum install caddy
+  when: ansible_distribution_major_version == "7"

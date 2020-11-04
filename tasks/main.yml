@@ -1,25 +1,7 @@
 ---
-- name: Download Caddy
-  unarchive:
-    src: "{{caddy_url}}"
-    dest: /tmp/
-    remote_src: yes
-  environment:
-    http_proxy: http://192.168.3.13:1080
-    https_proxy: http://192.168.3.13:1080
+- name: Install this role on {{ansible_os_family}}
+  include: "{{ansible_os_family}}.yml"
   
-
-- name: Install Caddy
-  copy:
-    src: /tmp/caddy
-    dest: /usr/local/bin
-    remote_src: yes
-  with_items:
-    - src: /tmp/caddy
-      dest: /usr/local/bin
-    - src: /tmp/init/linux-systemd/caddy.service
-      dest: /usr/lib/systemd/system/
-
 - name: Create Config dir
   file:
     path: "{{item}}"
@@ -28,48 +10,6 @@
     - /etc/caddy/conf.d
     - /etc/ssl/caddy
     
-- block:
-  - name: Create Caddy Group
-    group:
-      name: caddy
-
-  - name: Create Caddy User
-    user:
-      name: caddy
-      group: caddy
-      shell: /sbin/nologin
-
-  - name: Change User
-    replace:
-      path: /tmp/init/linux-systemd/caddy.service
-      regexp: "www-data"
-      replace: "caddy"
-  when: ansible_distribution == "CentOS"
-
-- name: Change service config
-  replace:
-    path: /tmp/init/linux-systemd/caddy.service
-    regexp: "{{item.regexp}}"
-    replace: "{{item.replace}}"
-  with_items:
-    - regexp: "^;CapabilityBoundingSet"
-      replace: "CapabilityBoundingSet"
-    - regexp: "^;AmbientCapabilities"
-      replace: "AmbientCapabilities"
-    - regexp: "^;NoNewPrivileges"
-      replace: "NoNewPrivileges"
-
-- name: Config caddy service
-  copy: 
-    src: /tmp/init/linux-systemd/caddy.service
-    dest: /etc/systemd/system/caddy.service
-    remote_src: yes
-
-- name: execute
-  file:
-    path: /usr/local/bin/caddy
-    mode: 0777
-
 - name: copy Caddyfile
   copy:
     src: Caddyfile
