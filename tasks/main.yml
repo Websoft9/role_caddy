@@ -20,3 +20,15 @@
     name: caddy
     state: restarted
     enabled: yes
+
+# Check version,
+- block:
+  - name: Check caddy Version
+    shell: sudo sh -c "caddy version' 1>> /data/logs/install_version.txt"
+
+# check service state
+  - name: Check Candy Service
+    shell: systemctl status caddy | grep Active*
+    register: check_caddy_service
+    notify: check_caddy_service
+
