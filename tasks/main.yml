@@ -1,19 +1,6 @@
 ---
 - name: Install this role on {{ansible_os_family}}
   include: "{{ansible_os_family}}.yml"
-  
-- name: Create Config dir
-  file:
-    path: "{{item}}"
-    state: directory
-  with_items:
-    - /etc/caddy/conf.d
-    - /etc/ssl/caddy
-    
-- name: copy Caddyfile
-  copy:
-    src: Caddyfile
-    dest: /etc/caddy/Caddyfile
 
 - name: Start caddy
   service:

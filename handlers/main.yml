@@ -1,2 +1,3 @@
----
-# handlers file for caddy
+- name:  check_caddy_service
+  debug:
+    var: check_caddy_service.stdout_lines
