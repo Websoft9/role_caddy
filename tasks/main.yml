@@ -2,6 +2,16 @@
 - name: Install this role on {{ansible_os_family}}
   include: "{{ansible_os_family}}.yml"
 
+- name: Create WebSite directory
+  file: 
+      path: /data/wwwroot/www.example.com
+      state: directory
+      owner: caddy
+      group: caddy
+
+- name: Copy Caddy Configuration 
+  copy: src=caddy.conf dest=/etc/caddy      
+  
 - name: Start caddy
   service:
     name: caddy
