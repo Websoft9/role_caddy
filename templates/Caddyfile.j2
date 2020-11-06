@@ -1,0 +1,31 @@
+{% if caddy_vhost_mode == 'www' and caddy_reverse_proxy_port  is none %}
+:{{caddy_vhost_mode_port}} { 
+    root * /data/wwwroot/{{caddy_appname}}
+    file_server
+    php_fastcgi localhost:9000
+    encode zstd gzip
+    file_server browse
+    log {
+         output file /var/logs/caddy_access.log
+         roll_size 1gb
+		 roll_keep 5
+		 roll_keep_for 720h
+    }  
+}
+{% endif %} 
+
+{% if caddy_vhost_mode == 'reverse' or caddy_reverse_proxy_port  is not none %}
+:{{caddy_listen_port}} {
+    reverse_proxy * localhost:{{caddy_reverse_proxy_port}}
+    file_server
+    }
+{% endif %}
+
+{% if caddy_vhost_mode == 'redirect' or caddy_reverse_proxy_port  is not none %}
+example.com  { 
+	redir  https://www.example.com {uri} 
+    file_server
+} 
+www.example.com  { 
+}
+{% endif %}

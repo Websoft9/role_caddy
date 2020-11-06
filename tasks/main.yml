@@ -4,13 +4,17 @@
 
 - name: Create WebSite directory
   file: 
-      path: /data/wwwroot/www.example.com
+      path: /data/wwwroot/{{caddy_appname}}
       state: directory
       owner: caddy
       group: caddy
 
 - name: Copy Caddy Configuration 
-  copy: src=caddy.conf dest=/etc/caddy      
+  template: 
+    src: Caddyfile.j2 
+    dest: /etc/caddy
+    owner: caddy
+    group: caddy    
   
 - name: Start caddy
   service:

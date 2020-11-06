@@ -1,0 +1,13 @@
+# reverse | www | redirect
+caddy_vhost_mode: "www"
+
+# 80 |443
+caddy_vhost_mode_port: "80"
+
+caddy_appname: "example"
+
+caddy_reverse_proxy_port: 
+
+# default listen port 
+caddy_listen_port: "80"
+
