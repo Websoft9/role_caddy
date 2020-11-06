@@ -1,6 +1,11 @@
-http:// {
+:80 {
+    index index.php index.html
     gzip
-    root /data/wwwroot/
+    root /data/wwwroot/www.example.com
+    fastcgi / /dev/shm/php-fpm-default.sock php
+    log /var/log/caddy/access.log
+    errors /var/log/caddy/error.log
 }
+
 
 import conf.d/*.conf
