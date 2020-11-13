@@ -1,5 +1,5 @@
 {% if caddy_vhost_mode == 'www' and caddy_reverse_proxy_port  is none %}
-www.example.com:{{caddy_vhost_mode_port}} { 
+:{{caddy_vhost_mode_port}} { 
     root * /data/wwwroot/{{caddy_appname}}
     file_server
     php_fastcgi localhost:9000
@@ -8,8 +8,8 @@ www.example.com:{{caddy_vhost_mode_port}} {
     log {
          output file /var/logs/caddy_access.log
          roll_size 1gb
-		 roll_keep 5
-		 roll_keep_for 720h
+         roll_keep 5
+         roll_keep_for 720h
     }  
 }
 {% endif %} 
