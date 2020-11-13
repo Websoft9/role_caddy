@@ -1,5 +1,5 @@
 {% if caddy_vhost_mode == 'www' and caddy_reverse_proxy_port  is none %}
-:{{caddy_vhost_mode_port}} { 
+www.example.com:{{caddy_vhost_mode_port}} { 
     root * /data/wwwroot/{{caddy_appname}}
     file_server
     php_fastcgi localhost:9000
