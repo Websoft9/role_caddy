@@ -12,7 +12,7 @@
 - name: Copy Caddy Configuration 
   template: 
     src: Caddyfile.j2 
-    dest: /etc/caddy
+    dest: /etc/caddy/Caddyfile
     owner: caddy
     group: caddy    
   
