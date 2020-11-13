@@ -7,9 +7,7 @@
     file_server browse
     log {
          output file /var/logs/caddy_access.log
-         roll_size 1gb
-         roll_keep 5
-         roll_keep_for 720h
+         format single_field common_log
     }  
 }
 {% endif %} 
