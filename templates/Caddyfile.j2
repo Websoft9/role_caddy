@@ -18,7 +18,7 @@
     }
 {% endif %}
 
-{% if caddy_vhost_mode == 'redirect' or caddy_reverse_proxy_port  is not none %}
+{% if caddy_vhost_mode == 'redirect' or caddy_redirect_url  is not none %}
 {{caddy_appname}}.yourdomain.com  { 
 	redir  http://{{caddy_appname}}.yourdomain.com {uri} 
         file_server
