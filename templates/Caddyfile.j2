@@ -26,3 +26,11 @@
 {{caddy_redirect_url}}  { 
 }
 {% endif %}
+
+{% if caddy_vhost_mode == 'reverse' or caddy_reverse_proxy_port  is not none %}
+:{{caddy_listen_port}} {
+    reverse_proxy * localhost:{{caddy_reverse_proxy_port}}
+    file_server
+    }
+{% endif %}
+
