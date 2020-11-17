@@ -11,3 +11,5 @@ caddy_reverse_proxy_port:
 # default listen port 
 caddy_listen_port: "80"
 
+caddy_redirect_url:
+
