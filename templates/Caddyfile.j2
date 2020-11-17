@@ -1,5 +1,5 @@
 {% if caddy_vhost_mode == 'www' and caddy_reverse_proxy_port  is none %}
-www.example.com :{{caddy_vhost_mode_port}} { 
+{{caddy_appname}}.yourdomain.com :{{caddy_vhost_mode_port}} { 
     root * /data/wwwroot/{{caddy_appname}}
     php_fastcgi localhost:9000
     encode zstd gzip
@@ -19,10 +19,10 @@ www.example.com :{{caddy_vhost_mode_port}} {
 {% endif %}
 
 {% if caddy_vhost_mode == 'redirect' or caddy_reverse_proxy_port  is not none %}
-example.com  { 
-	redir  https://www.example.com {uri} 
-    file_server
+{{caddy_appname}}.yourdomain.com  { 
+	redir  http://{{caddy_appname}}.yourdomain.com {uri} 
+        file_server
 } 
-www.example.com  { 
+{{caddy_redirect_url}}  { 
 }
 {% endif %}
