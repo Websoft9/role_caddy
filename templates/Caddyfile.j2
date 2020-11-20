@@ -8,12 +8,6 @@
          output file /data/logs/caddy_access.log
          format single_field common_log
     }  
-    errors  /data/logs/caddy_error.log {
-    rotate_size     mb
-    rotate_age      days
-    rotate_keep     count
-    rotate_compress
-}
 }
 {% endif %} 
 
@@ -28,12 +22,6 @@
          output file /data/logs/caddy_access.log
          format single_field common_log
     }  
-    errors  /data/logs/caddy_error.log {
-        rotate_size     mb
-        rotate_age      days
-        rotate_keep     count
-        rotate_compress
-}
     templates {
     path   {{caddy_alias_path}}
 }
