@@ -13,3 +13,4 @@ caddy_listen_port: "80"
 
 caddy_redirect_url:
 
+caddy_alias_path: 
