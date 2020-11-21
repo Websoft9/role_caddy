@@ -35,11 +35,11 @@
     }
 {% endif %}
 
-{% if caddy_vhost_mode == 'redirect' or caddy_redirect_url  is not none %}
-{{caddy_appname}}.yourdomain.com  { 
-	redir  http://{{caddy_appname}}.yourdomain.com {uri} permanent
-        file_server
-} 
-{{caddy_redirect_url}}  { 
+{% if caddy_vhost_mode == 'redirect' or caddy_redirect_newsite_url  is not none %}
+{{caddy_redirect_url}} {
+	redir https://{{caddy_redirect_newsite_url}}{uri}
+}
+
+{{caddy_redirect_newsite_url}} {
 }
 {% endif %}
