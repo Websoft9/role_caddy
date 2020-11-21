@@ -23,7 +23,7 @@ http://{{caddy_appname}}.yourdomain.com :{{caddy_vhost_mode_port}} {
          format single_field common_log
     }  
     templates {
-    path   {{caddy_alias_path}}
+    path   /data/wwwroot/{{caddy_appname}}/{{caddy_alias_path}}
 }
 }
 {% endif %} 
