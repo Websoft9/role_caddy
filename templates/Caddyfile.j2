@@ -1,5 +1,5 @@
 {% if caddy_vhost_mode == 'www' and caddy_reverse_proxy_port  is none %}
-{{caddy_appname}}.yourdomain.com :{{caddy_vhost_mode_port}} { 
+http://{{caddy_appname}}.yourdomain.com :{{caddy_vhost_mode_port}} { 
     root * /data/wwwroot/{{caddy_appname}}
     php_fastcgi localhost:9000
     encode zstd gzip
@@ -13,7 +13,7 @@
 
 # alias amount to caddy templates module
 {% if caddy_vhost_mode == 'alias' or caddy_alias_path  is not none %}
-{{caddy_appname}}.yourdomain.com :{{caddy_vhost_mode_port}} { 
+http://{{caddy_appname}}.yourdomain.com :{{caddy_vhost_mode_port}} { 
     root * /data/wwwroot/{{caddy_appname}}
     php_fastcgi localhost:9000
     encode zstd gzip
