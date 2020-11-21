@@ -30,7 +30,8 @@
     force: yes
   with_items:
     - {src: /var/lib/caddy/caddy_access.log,dest: /data/logs/caddy_access.log}
-
+  failed_when: false
+  
 # Check version
 - block:
   - name: Check caddy Version
