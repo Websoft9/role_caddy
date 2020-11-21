@@ -29,9 +29,8 @@
     state: link
     force: yes
   with_items:
-    - {src: ,dest: /data/apps/frappe}
- 
-  
+    - {src: /var/lib/caddy/caddy_access.log,dest: /data/logs/caddy_access.log}
+
 # Check version
 - block:
   - name: Check caddy Version
