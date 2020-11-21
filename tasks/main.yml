@@ -21,7 +21,17 @@
     name: caddy
     state: restarted
     enabled: yes
-
+    
+- name: Create link
+  file:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+    state: link
+    force: yes
+  with_items:
+    - {src: ,dest: /data/apps/frappe}
+ 
+  
 # Check version
 - block:
   - name: Check caddy Version
