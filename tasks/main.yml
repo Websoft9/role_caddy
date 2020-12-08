@@ -30,7 +30,7 @@
     force: yes
   with_items:
     - {src: /var/lib/caddy/caddy_access.log,dest: /data/logs/caddy_access.log}
-    - {src: /etc/caddy/Caddyfile,dest: /etc/caddy/caddyfile.conf}
+    - {src: /etc/caddy/Caddyfile,dest: /etc/caddy/caddy.conf}
     
 # Check version
 - block:
