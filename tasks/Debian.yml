@@ -1,7 +1,7 @@
 # add caddy repo
 - name: Add caddy repo
   apt_repository:
-    repo: 'deb [trusted=yes] https://apt.fury.io/caddy/ /'
+    repo: deb [trusted=yes] https://apt.fury.io/caddy/ /
     filename: caddy-fury
     update_cache: yes
 
