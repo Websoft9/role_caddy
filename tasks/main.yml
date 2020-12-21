@@ -1,82 +1,44 @@
 ---
-- name: Download Caddy
-  unarchive:
-    src: "{{caddy_url}}"
-    dest: /tmp/
-    remote_src: yes
-  environment:
-    http_proxy: http://192.168.3.13:1080
-    https_proxy: http://192.168.3.13:1080
-  
+- name: Install this role on {{ansible_os_family}}
+  include: "{{ansible_os_family}}.yml"
 
-- name: Install Caddy
-  copy:
-    src: /tmp/caddy
-    dest: /usr/local/bin
-    remote_src: yes
-  with_items:
-    - src: /tmp/caddy
-      dest: /usr/local/bin
-    - src: /tmp/init/linux-systemd/caddy.service
-      dest: /usr/lib/systemd/system/
-
-- name: Create Config dir
-  file:
-    path: "{{item}}"
-    state: directory
-  with_items:
-    - /etc/caddy/conf.d
-    - /etc/ssl/caddy
-    
-- block:
-  - name: Create Caddy Group
-    group:
-      name: caddy
-
-  - name: Create Caddy User
-    user:
-      name: caddy
+- name: Create WebSite directory
+  file: 
+      path: /data/wwwroot/{{caddy_appname}}
+      state: directory
+      owner: caddy
       group: caddy
-      shell: /sbin/nologin
 
-  - name: Change User
-    replace:
-      path: /tmp/init/linux-systemd/caddy.service
-      regexp: "www-data"
-      replace: "caddy"
-  when: ansible_distribution == "CentOS"
-
-- name: Change service config
-  replace:
-    path: /tmp/init/linux-systemd/caddy.service
-    regexp: "{{item.regexp}}"
-    replace: "{{item.replace}}"
-  with_items:
-    - regexp: "^;CapabilityBoundingSet"
-      replace: "CapabilityBoundingSet"
-    - regexp: "^;AmbientCapabilities"
-      replace: "AmbientCapabilities"
-    - regexp: "^;NoNewPrivileges"
-      replace: "NoNewPrivileges"
-
-- name: Config caddy service
-  copy: 
-    src: /tmp/init/linux-systemd/caddy.service
-    dest: /etc/systemd/system/caddy.service
-    remote_src: yes
-
-- name: execute
-  file:
-    path: /usr/local/bin/caddy
-    mode: 0777
-
-- name: copy Caddyfile
-  copy:
-    src: Caddyfile
+- name: Copy Caddy Configuration 
+  template: 
+    src: Caddyfile.j2 
     dest: /etc/caddy/Caddyfile
-
+    owner: caddy
+    group: caddy    
+  
 - name: Start caddy
   service:
     name: caddy
     state: restarted
     enabled: yes
+    
+- name: Create link
+  file:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+    state: link
+    force: yes
+  with_items:
+    - {src: /var/lib/caddy/caddy_access.log,dest: /data/logs/caddy_access.log}
+    - {src: /etc/caddy/Caddyfile,dest: /etc/caddy/caddyfile.conf}
+    
+# Check version
+- block:
+  - name: Check caddy Version
+    shell: sudo echo $(caddy version) | sudo tee -a /data/logs/install_version.txt
+
+# check service state
+  - name: Check Candy Service
+    shell: systemctl status caddy | grep Active*
+    register: check_caddy_service
+    notify: check_caddy_service
