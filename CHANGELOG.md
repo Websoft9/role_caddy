@@ -1,7 +1,6 @@
 # CHANGELOG
 
-## 2020-02-14 Release 5.0.1-1
+## 2020-12-21 Release v1.0.4-alapha
 
-* add([#33][i33])
-* fix
+* role_caddy init
 
