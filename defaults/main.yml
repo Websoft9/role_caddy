@@ -1,2 +1,16 @@
----
-caddy_url: https://github.com/caddyserver/caddy/releases/download/v1.0.4/caddy_v1.0.4_linux_amd64.tar.gz
+# reverse | www | redirect
+caddy_vhost_mode: "www"
+
+# 80 |443
+caddy_vhost_mode_port: "80"
+
+caddy_appname: "example"
+
+caddy_reverse_proxy_port: 
+
+# default listen port 
+caddy_listen_port: "80"
+
+caddy_redirect_newsite_url:
+
+caddy_alias_path: 
