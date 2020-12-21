@@ -1,6 +1,0 @@
-http:// {
-    gzip
-    root /data/wwwroot/
-}
-
-import conf.d/*.conf
